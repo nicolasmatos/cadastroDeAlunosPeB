@@ -17,17 +17,162 @@
 10.	Salvar os alunos na base de dados a partir da memória, refletindo qualquer inclusão, exclusão ou alteração feita através do programa.
 */
 
-void chamaArquivo(char arquivo[]) {
+void carregaAlunos(Arvore * a, FILE * fp) {
+	int i = 0;
+	char c = fgetc(fp);
+
+	while (c != EOF) {
+		char matricula[50];
+		char nome[50];
+		char email[50];
+		char telefone[50];
+		int mat;
+
+		while (c != ' ') {
+			matricula[i] = c;
+			i++;
+			c = fgetc(fp);
+		}
+		matricula[i] = '\0';
+		c = fgetc(fp);
+		c = fgetc(fp);
+		c = fgetc(fp);
+		i = 0;
+
+		while (c != '|') {
+			nome[i] = c;
+			i++;
+			c = fgetc(fp);
+		}
+		nome[i - 1] = '\0';
+		c = fgetc(fp);
+		c = fgetc(fp);
+		i = 0;
+
+		while (c != ' ') {
+			email[i] = c;
+			i++;
+			c = fgetc(fp);
+		}
+		email[i] = '\0';
+		c = fgetc(fp);
+		c = fgetc(fp);
+		c = fgetc(fp);
+		i = 0;
+
+		while (c != '\n') {
+			telefone[i] = c;
+			i++;
+			c = fgetc(fp);
+		}
+		telefone[i] = '\0';
+		i = 0;
+
+		mat = atoi(matricula);
+
+		/*
+		printf("\nMatricula: %d\n", mat);
+		printf("\nNome: %s\n", nome);
+		printf("\nEmail: %s\n", email);
+		printf("\nTelefone: %s\n", telefone);
+		*/
+		
+		inserir(a, mat, nome, email, telefone);
+
+		c = fgetc(fp);
+	}
+	fclose(fp);
+}
+
+void removerAlunos(Arvore * a, FILE * fp) {
+	int i = 0;
+	char c = fgetc(fp);
+
+	while (c != EOF) {
+		char matricula[50];
+		int mat;
+
+		while (c != '\n') {
+			matricula[i] = c;
+			i++;
+			c = fgetc(fp);
+		}
+		matricula[i] = '\0';
+		i = 0;
+		mat = atoi(matricula);
+		remover(a, mat);
+
+		c = fgetc(fp);
+	}
+	fclose(fp);
+}
+
+void consultarAlunos(Arvore * a, FILE * fp) {
+	int i = 0;
+	char c = fgetc(fp);
+
+	while (c != EOF) {
+		char matricula[50];
+		int mat;
+
+		while (c != '\n') {
+			matricula[i] = c;
+			i++;
+			c = fgetc(fp);
+		}
+		matricula[i] = '\0';
+		i = 0;
+		mat = atoi(matricula);
+		consultar(a, mat);
+
+		c = fgetc(fp);
+	}
+	fclose(fp);
+}
+
+void chamaArquivo(Arvore * a, char arquivo[]) {
 	char caminho[100];
 	strcpy(caminho, "Arquivos\\");
 	strcat(caminho, arquivo);
 	strcat(caminho, ".txt");
-	FILE *fp;
+
+	FILE * fp;
 	fp = fopen(caminho, "r");
 	if (fp == NULL) {
 		printf("\nErro na abertura do arquivo\n");
 		printf("OBS: Verifique o nome do arquivo\n\n");
 	}
+	carregaAlunos(a, fp);
+}
+
+void chamaArquivoR(Arvore * a, char arquivo[]) {
+	char caminho[100];
+	strcpy(caminho, "Arquivos\\");
+	strcat(caminho, arquivo);
+	strcat(caminho, ".txt");
+
+	FILE * fp;
+	fp = fopen(caminho, "r");
+	if (fp == NULL) {
+		printf("\nErro na abertura do arquivo\n");
+		printf("OBS: Verifique o nome do arquivo\n\n");
+	}
+	removerAlunos(a, fp);
+}
+
+void chamaArquivoC(Arvore * a, char arquivo[]) {
+	char caminho[100];
+	strcpy(caminho, "Arquivos\\");
+	strcat(caminho, arquivo);
+	strcat(caminho, ".txt");
+
+	FILE * fp;
+	fp = fopen(caminho, "r");
+	if (fp == NULL) {
+		printf("\nErro na abertura do arquivo\n");
+		printf("OBS: Verifique o nome do arquivo\n\n");
+	}
+	consultarAlunos(a, fp);
 }
 
 int main() {
@@ -63,7 +208,8 @@ int main() {
 			scanf("%s", arquivo);
 			fflush(stdin);
 
-			chamaArquivo(arquivo);
+			chamaArquivo(a, arquivo);
+			imprimirPre(a);
 		}
 		if (opcao == 2) {
 			system("cls");
@@ -72,6 +218,27 @@ int main() {
 				"|     Inserir aluno      |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			int matricula;
+			char nome[50];
+			char email[50];
+			char telefone[50];
+			printf("\nMatricula: ");
+			scanf("%d", &matricula);
+
+			fflush(stdin);
+			printf("\nNome: ");
+			scanf("%s", nome);
+			fflush(stdin);
+			printf("\nEmail:");
+			scanf("%s", email);
+			fflush(stdin);
+			printf("\nTelefone: ");
+			scanf("%s", telefone);
+			fflush(stdin);
+
+			inserir(a, matricula, nome, email, telefone);
+			printf("\n");
+			imprimirPre(a);
 		}
 		if (opcao == 3) {
 			system("cls");
@@ -88,6 +255,13 @@ int main() {
 				"|  Listando de arquivo   |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			char arquivo[50];
+			fflush(stdin);
+			printf("Nome do arquivo a ser carregado: ");
+			scanf("%s", arquivo);
+			fflush(stdin);
+
+			chamaArquivoC(a, arquivo);
 		}
 		if (opcao == 5) {
 			system("cls");
@@ -96,6 +270,11 @@ int main() {
 				"| Consulta por matricula |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			int matricula;
+			printf("\nMatricula: ");
+			scanf("%d", &matricula);
+			int result = consultar(a, matricula);
+			if (result == 0) printf("\nO aluno nao foi encontrado.\n");
 		}
 		if (opcao == 6) {
 			system("cls");
@@ -104,6 +283,11 @@ int main() {
 				"|  Edicao por matricula  |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			int matricula;
+			printf("\nMatricula: ");
+			scanf("%d", &matricula);
+			int result = editarAluno(a, matricula);
+			if (result == 0) printf("\nO aluno nao foi encontrado.\n");
 		}
 		if (opcao == 7) {
 			system("cls");
@@ -112,6 +296,11 @@ int main() {
 				"| Remocao por matricula  |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			int matricula;
+			printf("\nMatricula: ");
+			scanf("%d", &matricula);
+			int result = remover(a, matricula);
+			if (result == 0) printf("\nO aluno nao foi encontrado.\n");
 		}
 		if (opcao == 8) {
 			system("cls");
@@ -120,6 +309,13 @@ int main() {
 				"|  Remocao por arquivo   |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			char arquivo[50];
+			fflush(stdin);
+			printf("Nome do arquivo a ser carregado: ");
+			scanf("%s", arquivo);
+			fflush(stdin);
+
+			chamaArquivoR(a, arquivo);
 		}
 		if (opcao == 9) {
 			system("cls");
@@ -128,6 +324,7 @@ int main() {
 				"|    Removendo todos     |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			remover_todos(a);
 		}
 		if (opcao == 10) {
 			system("cls");

@@ -20,67 +20,28 @@
 void carregaAlunos(Arvore * a, FILE * fp) {
 	int i = 0;
 	char c = fgetc(fp);
-
-	while (c != EOF) {
-		char matricula[50];
-		char nome[50];
-		char email[50];
-		char telefone[50];
-		int mat;
-
-		while (c != ' ') {
-			matricula[i] = c;
-			i++;
-			c = fgetc(fp);
-		}
-		matricula[i] = '\0';
-		c = fgetc(fp);
-		c = fgetc(fp);
-		c = fgetc(fp);
-		i = 0;
-
-		while (c != '|') {
-			nome[i] = c;
-			i++;
-			c = fgetc(fp);
-		}
-		nome[i - 1] = '\0';
-		c = fgetc(fp);
-		c = fgetc(fp);
-		i = 0;
-
-		while (c != ' ') {
-			email[i] = c;
-			i++;
-			c = fgetc(fp);
-		}
-		email[i] = '\0';
-		c = fgetc(fp);
-		c = fgetc(fp);
-		c = fgetc(fp);
-		i = 0;
-
-		while (c != '\n') {
-			telefone[i] = c;
-			i++;
-			c = fgetc(fp);
-		}
-		telefone[i] = '\0';
-		i = 0;
-
-		mat = atoi(matricula);
-
-		/*
-		printf("\nMatricula: %d\n", mat);
-		printf("\nNome: %s\n", nome);
-		printf("\nEmail: %s\n", email);
-		printf("\nTelefone: %s\n", telefone);
-		*/
+	
+	char nome[50];
+	char email[50];
+	char telefone[50];
+	int matricula;
+	
+	char buffer[500];
+	
+	while(fgets(buffer,sizeof(buffer),fp)) { //Cada vez que a função fgets é chamada, ele armazena em buffer a próxima linha do arquivo.
+		sscanf(buffer,"%d | %[^|] | %[^|] | %[^\n]",&matricula,nome,email,telefone); //Formata a string no formato desejado e armazena em variaveis
 		
+		char nome[strlen(nome)-1] = '\n';//retira ultimo espaço em branco
+		char email[strlen(nome)-1] = '\n';
+		
+		inserir(a, mat, nome, email, telefone);//Insere na arvore
+	}
+
+	
 		inserir(a, mat, nome, email, telefone);
 
 		c = fgetc(fp);
-	}
+	}*/
 	fclose(fp);
 }
 

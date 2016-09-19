@@ -34,7 +34,7 @@ void carregaAlunos(Arvore * a, FILE * fp) {
 		char nome[strlen(nome)-1] = '\n';//retira ultimo espaço em branco
 		char email[strlen(nome)-1] = '\n';
 		
-		inserir(a, mat, nome, email, telefone);//Insere na arvore
+		inserir(a, matricula, nome, email, telefone);//Insere na arvore
 	}
 
 	

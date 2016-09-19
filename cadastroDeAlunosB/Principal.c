@@ -38,10 +38,6 @@ void carregaAlunos(Arvore * a, FILE * fp) {
 	}
 
 	
-		inserir(a, mat, nome, email, telefone);
-
-		c = fgetc(fp);
-	}*/
 	fclose(fp);
 }
 

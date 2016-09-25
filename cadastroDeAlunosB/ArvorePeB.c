@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ArvorePeB.h"
 
 typedef struct no No;
@@ -25,7 +26,7 @@ struct no {
 };
 
 Arvore * criar() {
-	Arvore * a = malloc(sizeof(Arvore));
+	Arvore * a = (Arvore *) malloc(sizeof(Arvore));
 	a->raiz = NULL;
 	return a;
 }

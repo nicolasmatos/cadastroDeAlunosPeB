@@ -90,22 +90,6 @@ int buscar_maior(Arvore * a) {
 	return buscar_maior_rec(a->raiz);
 }
 
-void inserir_rec(No * * pRaiz, Aluno * aluno) {
-	No* raiz = *pRaiz;
-	if (raiz != NULL) {
-		if (aluno->matricula < raiz->aluno->matricula) inserir_rec(&raiz->esq, aluno);
-		if (aluno->matricula > raiz->aluno->matricula) inserir_rec(&raiz->dir, aluno);
-	}
-	else {
-		raiz = (No *)malloc(sizeof(No));
-		raiz->aluno = aluno;
-		raiz->esq = NULL;
-		raiz->dir = NULL;
-
-		*pRaiz = raiz;
-	}
-}
-
 void inserir(Arvore * a, int matricula, char nome[], char email[], char telefone[]) {
 	Aluno * aluno = (Aluno *)malloc(sizeof(Aluno));
 	aluno->matricula = matricula;
@@ -113,7 +97,28 @@ void inserir(Arvore * a, int matricula, char nome[], char email[], char telefone
 	strcpy(aluno->email, email);
 	strcpy(aluno->telefone, telefone);
 
-	inserir_rec(&a->raiz, aluno);
+	No *ant = NULL, *raiz = a->raiz;
+	while (raiz != NULL && raiz->aluno->matricula != aluno->matricula) {
+		ant = raiz;
+		raiz = aluno->matricula < raiz->aluno->matricula ? raiz->esq : raiz->dir;
+	}
+	if (raiz == NULL) {
+		raiz = (No *)malloc(sizeof(No));
+		raiz->aluno = aluno;
+		raiz->esq = NULL;
+		raiz->dir = NULL;
+		if (ant == NULL) {
+			a->raiz = raiz;
+		}
+		else {
+			if (aluno->matricula < ant->aluno->matricula) {
+				ant->esq = raiz;
+			}
+			else {
+				ant->dir = raiz;
+			}
+		}
+	}
 }
 
 void imprimirAluno(Aluno * a) {
@@ -123,17 +128,16 @@ void imprimirAluno(Aluno * a) {
 	printf("%s \n\n", a->telefone);
 }
 
-Aluno * buscar_rec(No * raiz, int matricula) {
-	if (raiz != NULL) {
-		if (matricula < raiz->aluno->matricula) return buscar_rec(raiz->esq, matricula);
-		if (matricula > raiz->aluno->matricula) return buscar_rec(raiz->dir, matricula);
-		return raiz->aluno;
+Aluno * buscar(Arvore * a, int matricula) {
+	No * raiz = a->raiz;
+	while (raiz != NULL && raiz->aluno->matricula != matricula) {
+		raiz = matricula < raiz->aluno->matricula ? raiz->esq : raiz->dir;
 	}
-	return NULL;
+	return raiz != NULL ? raiz->aluno : NULL;
 }
 
 int consultar(Arvore * a, int matricula) {
-	Aluno * aluno = buscar_rec(a->raiz, matricula);
+	Aluno * aluno = buscar(a, matricula);
 	if (aluno != NULL) {
 		imprimirAluno(aluno);
 		return 1;
@@ -142,7 +146,7 @@ int consultar(Arvore * a, int matricula) {
 }
 
 int editarAluno(Arvore * a, int matricula) {
-	Aluno * aluno = buscar_rec(a->raiz, matricula);
+	Aluno * aluno = buscar(a, matricula);
 	if (aluno != NULL) {
 		int opcao = 1;
 		while (opcao != 5) {
@@ -194,7 +198,7 @@ int editarAluno(Arvore * a, int matricula) {
 					"|                        |\n"
 					"|      Alterar tudo      |\n"
 					"|                        |\n"
-					"--------------------------\n"); 
+					"--------------------------\n");
 				fflush(stdin);
 				printf("\nNome: ");
 				scanf("%s", aluno->nome);
@@ -224,67 +228,87 @@ int editarAluno(Arvore * a, int matricula) {
 	return 0;
 }
 
-int remover_maior_rec(No * * pRaiz) {
-	No * raiz = *pRaiz;
-	if (raiz->dir != NULL) {
-		return remover_maior_rec(&raiz->dir);
+int remover_maior(No * * pRaiz) {
+	No * ant = NULL, *raiz = *pRaiz;
+	while (raiz->dir != NULL) {
+		ant = raiz;
+		raiz = raiz->dir;
 	}
-	*pRaiz = raiz->esq;
+	if (ant == NULL) {
+		*pRaiz = raiz->esq;
+	}
+	else {
+		ant->dir = raiz->esq;
+	}
 	int info = raiz->aluno->matricula;
-	free(raiz->aluno);
 	free(raiz);
 	return info;
 }
 
-int remover_menor_rec(No * * pRaiz) {
-	No * raiz = *pRaiz;
-	if (raiz->esq != NULL) {
-		return remover_menor_rec(&raiz->esq);
+int remover_menor(No * * pRaiz) {
+	No * ant = NULL, *raiz = *pRaiz;
+	while (raiz->esq != NULL) {
+		ant = raiz;
+		raiz = raiz->esq;
 	}
-	*pRaiz = raiz->dir;
+	if (ant == NULL) {
+		*pRaiz = raiz->dir;
+	}
+	else {
+		ant->esq = raiz->dir;
+	}
 	int info = raiz->aluno->matricula;
-	free(raiz->aluno);
 	free(raiz);
 	return info;
 }
 
-void remover_rec(No * * pRaiz, int matricula) {
-	No * raiz = *pRaiz;
-	if (raiz != NULL) {
-		if (matricula < raiz->aluno->matricula) remover_rec(&raiz->esq, matricula);
-		else if (matricula > raiz->aluno->matricula) remover_rec(&raiz->dir, matricula);
+void ajustar_anterior(Arvore * a, No * ant, int matricula, No * no) {
+	if (ant == NULL) {
+		a->raiz = no;
+	}
+	else {
+		if (matricula < ant->aluno->matricula) {
+			ant->esq = no;
+		}
 		else {
+			ant->dir = no;
+		}
+	}
+}
+
+int remover(Arvore * a, int matricula) {
+	Aluno * aluno = buscar(a, matricula);
+	if (aluno != NULL) {
+		No * ant = NULL, *raiz = a->raiz;
+		while (raiz != NULL && raiz->aluno->matricula != matricula) {
+			ant = raiz;
+			raiz = matricula < raiz->aluno->matricula ? raiz->esq : raiz->dir;
+		}
+		if (raiz != NULL) {
 			//Folha
 			if (raiz->esq == NULL && raiz->dir == NULL) {
-				*pRaiz = NULL;
+				ajustar_anterior(a, ant, matricula, NULL);
 				free(raiz->aluno);
 				free(raiz);
 			}
 			else {
 				//Dois filhos
 				if (raiz->esq != NULL && raiz->dir != NULL) {
-					raiz->aluno->matricula = //remover_maior_rec(&raiz->esq);
-						remover_menor_rec(&raiz->dir);
+					raiz->aluno->matricula = //remover_maior(&raiz->esq);
+						remover_menor(&raiz->dir);
 				}
 				else {//Um filho
 					if (raiz->esq != NULL) {
-						*pRaiz = raiz->esq;
+						ajustar_anterior(a, ant, matricula, raiz->esq);
 					}
 					else {
-						*pRaiz = raiz->dir;
+						ajustar_anterior(a, ant, matricula, raiz->dir);
 					}
 					free(raiz->aluno);
 					free(raiz);
 				}
 			}
 		}
-	}
-}
-
-int remover(Arvore * a, int matricula) {
-	Aluno * aluno = buscar_rec(a->raiz, matricula);
-	if (aluno != NULL) {
-		remover_rec(&a->raiz, matricula);
 		return 1;
 	}
 	return 0;
@@ -319,7 +343,6 @@ void salvar_em_arquivo(Arvore * a, char arquivo[]) {
 
 	if ((fp = fopen(arquivo, "w")) == NULL) {
 		printf("Erro, nao foi possivel abrir o arquivo\n");
-		exit(1);
 	}
 	salva_aluno(a->raiz, fp);
 	fclose(fp);

@@ -26,5 +26,8 @@
     <ClCompile Include="Principal.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ArvorePeBIterativa.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

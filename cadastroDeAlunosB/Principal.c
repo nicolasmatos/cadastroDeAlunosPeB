@@ -142,7 +142,9 @@ void chamaArquivo(Arvore * a, char arquivo[]) {
 		printf("\nErro na abertura do arquivo\n");
 		printf("OBS: Verifique o nome do arquivo\n\n");
 	}
-	carregaAlunos(a, fp);
+	else {
+		carregaAlunos(a, fp);
+	}
 }
 
 void chamaArquivoR(Arvore * a, char arquivo[]) {
@@ -178,6 +180,7 @@ void chamaArquivoC(Arvore * a, char arquivo[]) {
 int main() {
 	Arvore * a = criar();
 	int opcao = 1;
+	char arquivoCarregado[50];
 
 	while (opcao != 11) {
 		printf("================================Menu de opcoes================================\n");
@@ -195,6 +198,14 @@ int main() {
 		printf("===============================================================================\n");
 		printf("\nQual opcao do menu deseja executar?\n");
 		scanf("%d", &opcao);
+		if (opcao != 1 && opcao != 11) {
+			if (esta_vazia(a)) {
+				system("cls");
+				printf("Carregue o arquivo para a memoria. Enter para continuar.");
+				getch();
+				opcao = 1;
+			}
+		}
 		if (opcao == 1) {
 			system("cls");
 			printf("--------------------------\n"
@@ -202,13 +213,12 @@ int main() {
 				"|     Carregar alunos    |\n"
 				"|                        |\n"
 				"--------------------------\n");
-			char arquivo[50];
 			fflush(stdin);
 			printf("Nome do arquivo a ser carregado: ");
-			scanf("%s", arquivo);
+			scanf("%s", arquivoCarregado);
 			fflush(stdin);
 
-			chamaArquivo(a, arquivo);
+			chamaArquivo(a, arquivoCarregado);
 			imprimirPre(a);
 		}
 		if (opcao == 2) {
@@ -222,21 +232,20 @@ int main() {
 			char nome[50];
 			char email[50];
 			char telefone[50];
-			printf("\nMatricula: ");
-			scanf("%d", &matricula);
-
 			fflush(stdin);
 			printf("\nNome: ");
 			scanf("%s", nome);
 			fflush(stdin);
-			printf("\nEmail:");
+			printf("\nEmail: ");
 			scanf("%s", email);
 			fflush(stdin);
 			printf("\nTelefone: ");
 			scanf("%s", telefone);
 			fflush(stdin);
 
-			inserir(a, matricula, nome, email, telefone);
+			matricula = buscar_maior(a);
+
+			inserir(a, matricula + 1, nome, email, telefone);
 			printf("\n");
 			imprimirPre(a);
 		}
@@ -247,6 +256,7 @@ int main() {
 				"| Listando por matricula |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			imprimirIn(a);
 		}
 		if (opcao == 4) {
 			system("cls");
@@ -333,6 +343,12 @@ int main() {
 				"|  Salvando interacoes   |\n"
 				"|                        |\n"
 				"--------------------------\n");
+			char caminho[100];
+			strcpy(caminho, "Arquivos\\");
+			strcat(caminho, arquivoCarregado);
+			strcat(caminho, ".txt");
+			printf("%s", caminho);
+			salvar_em_arquivo(a, caminho);
 		}
 		if (opcao == 11) {
 			system("cls");

@@ -139,10 +139,11 @@ void chamaArquivo(Arvore * a, char arquivo[]) {
 	FILE * fp;
 	fp = fopen(caminho, "r");
 	if (fp == NULL) {
-		printf("\nErro na abertura do arquivo\n");
+		printf("\nErro na abertura do arquivo: %s\n", arquivo);
 		printf("OBS: Verifique o nome do arquivo\n\n");
 	}
 	else {
+		printf("Carregando alunos...\n\n");
 		carregaAlunos(a, fp);
 	}
 }
@@ -156,9 +157,10 @@ void chamaArquivoR(Arvore * a, char arquivo[]) {
 	FILE * fp;
 	fp = fopen(caminho, "r");
 	if (fp == NULL) {
-		printf("\nErro na abertura do arquivo\n");
+		printf("\nErro na abertura do arquivo: %s\n", arquivo);
 		printf("OBS: Verifique o nome do arquivo\n\n");
 	}
+	printf("Removendo alunos...\n\n");
 	removerAlunos(a, fp);
 }
 
@@ -171,9 +173,10 @@ void chamaArquivoC(Arvore * a, char arquivo[]) {
 	FILE * fp;
 	fp = fopen(caminho, "r");
 	if (fp == NULL) {
-		printf("\nErro na abertura do arquivo\n");
+		printf("\nErro na abertura do arquivo: %s\n", arquivo);
 		printf("OBS: Verifique o nome do arquivo\n\n");
 	}
+	printf("Consultando alunos...\n\n");
 	consultarAlunos(a, fp);
 }
 
@@ -200,10 +203,17 @@ int main() {
 		scanf("%d", &opcao);
 		if (opcao != 1 && opcao != 11) {
 			if (esta_vazia(a)) {
-				system("cls");
-				printf("Carregue o arquivo para a memoria. Enter para continuar.");
-				getch();
-				opcao = 1;
+				opcao = 3;
+				while (opcao != 1 && opcao != 2) {
+					system("cls");
+					printf("Carregue o arquivo para a memoria ou insira um aluno.\n\n");
+					printf("================================Menu de opcoes================================\n");
+					printf("1\. Carregar os alunos\n"
+						   "2\. Inserir um novo aluno\n");
+					printf("===============================================================================\n");
+					printf("\nQual opcao do menu deseja executar?\n");
+					scanf("%d", &opcao);
+				}
 			}
 		}
 		if (opcao == 1) {
@@ -347,7 +357,7 @@ int main() {
 			strcpy(caminho, "Arquivos\\");
 			strcat(caminho, arquivoCarregado);
 			strcat(caminho, ".txt");
-			printf("%s", caminho);
+			printf("%s\n", caminho);
 			salvar_em_arquivo(a, caminho);
 		}
 		if (opcao == 11) {

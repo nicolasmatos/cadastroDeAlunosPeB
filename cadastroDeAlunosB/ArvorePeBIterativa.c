@@ -88,7 +88,7 @@ int buscar_maior_rec(No * raiz) {
 }
 
 int buscar_maior(Arvore * a) {
-	return buscar_maior_rec(a->raiz);
+	return a->raiz != NULL ? buscar_maior_rec(a->raiz) : 0;
 }
 
 void inserir(Arvore * a, int matricula, char nome[], char email[], char telefone[]) {

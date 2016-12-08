@@ -1,21 +1,23 @@
 ﻿  Principal.c
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(126): warning C4013: 'consultar' undefined; assuming extern returning int
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(190): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(191): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(192): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(193): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(194): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(195): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(196): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(197): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(198): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(199): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(200): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(211): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(212): warning C4129: '.': unrecognized character escape sequence
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(311): warning C4013: 'editarAluno' undefined; assuming extern returning int
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(349): warning C4013: 'remover_todos' undefined; assuming extern returning int
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(363): warning C4013: 'salvar_em_arquivo' undefined; assuming extern returning int
-c:\dev\visual studio\cadastrodealunospeb\cadastrodealunosb\principal.c(370): warning C4013: 'getch' undefined; assuming extern returning int
-  cadastroDeAlunosB.vcxproj -> C:\Dev\Visual Studio\cadastroDeAlunosPeB\x64\Debug\cadastroDeAlunosB.exe
-  cadastroDeAlunosB.vcxproj -> C:\Dev\Visual Studio\cadastroDeAlunosPeB\x64\Debug\cadastroDeAlunosB.pdb (Partial PDB)
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(119): warning C4013: 'consultar' undefined; assuming extern returning int
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(187): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(188): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(189): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(190): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(191): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(192): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(193): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(194): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(195): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(196): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(197): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(208): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(209): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(306): warning C4013: 'editarAluno' undefined; assuming extern returning int
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(344): warning C4013: 'remover_todos' undefined; assuming extern returning int
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(357): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(358): warning C4129: '.': unrecognized character escape sequence
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(376): warning C4013: 'salvar_em_arquivo' undefined; assuming extern returning int
+c:\dev\visual studio\projects\cadastrodealunospeb\cadastrodealunosb\principal.c(383): warning C4013: 'getch' undefined; assuming extern returning int
+  cadastroDeAlunosB.vcxproj -> C:\Dev\Visual Studio\Projects\cadastroDeAlunosPeB\x64\Debug\cadastroDeAlunosB.exe
+  cadastroDeAlunosB.vcxproj -> C:\Dev\Visual Studio\Projects\cadastroDeAlunosPeB\x64\Debug\cadastroDeAlunosB.pdb (Partial PDB)

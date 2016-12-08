@@ -69,13 +69,6 @@ void carregaAlunos(Arvore * a, FILE * fp) {
 		i = 0;
 
 		mat = atoi(matricula);
-
-		/*
-		printf("\nMatricula: %d\n", mat);
-		printf("\nNome: %s\n", nome);
-		printf("\nEmail: %s\n", email);
-		printf("\nTelefone: %s\n", telefone);
-		*/
 		
 		inserir(a, mat, nome, email, telefone);
 
@@ -130,6 +123,7 @@ void consultarAlunos(Arvore * a, FILE * fp) {
 	fclose(fp);
 }
 
+//opcao 1
 void chamaArquivo(Arvore * a, char arquivo[]) {
 	char caminho[100];
 	strcpy(caminho, "Arquivos\\");
@@ -148,6 +142,7 @@ void chamaArquivo(Arvore * a, char arquivo[]) {
 	}
 }
 
+//opção 8
 void chamaArquivoR(Arvore * a, char arquivo[]) {
 	char caminho[100];
 	strcpy(caminho, "Arquivos\\");
@@ -164,6 +159,7 @@ void chamaArquivoR(Arvore * a, char arquivo[]) {
 	removerAlunos(a, fp);
 }
 
+//opção 4
 void chamaArquivoC(Arvore * a, char arquivo[]) {
 	char caminho[100];
 	strcpy(caminho, "Arquivos\\");
@@ -184,6 +180,7 @@ int main() {
 	Arvore * a = criar();
 	int opcao = 1;
 	char arquivoCarregado[50];
+	arquivoCarregado[0] = '-';
 
 	while (opcao != 11) {
 		printf("================================Menu de opcoes================================\n");
@@ -201,10 +198,10 @@ int main() {
 		printf("===============================================================================\n");
 		printf("\nQual opcao do menu deseja executar?\n");
 		scanf("%d", &opcao);
-		if (opcao != 1 && opcao != 11) {
+		if (opcao != 1 && opcao != 2 && opcao != 11) {
 			if (esta_vazia(a)) {
 				opcao = 3;
-				while (opcao != 1 && opcao != 2) {
+				while (opcao != 1 && opcao != 2 && opcao != 11) {
 					system("cls");
 					printf("Carregue o arquivo para a memoria ou insira um aluno.\n\n");
 					printf("================================Menu de opcoes================================\n");
@@ -354,6 +351,24 @@ int main() {
 				"|                        |\n"
 				"--------------------------\n");
 			char caminho[100];
+			int opcao2 = 3;
+			while (opcao2 != 1 && opcao2 != 2) {
+				printf("================================Menu de opcoes================================\n");
+				printf("1\. Novo arquivo\n"
+					   "2\. Arquivo atual(se foi carregado no inicio da operacao)\n");
+				printf("===============================================================================\n");
+				printf("\nQual opcao do menu deseja executar?\n");
+				scanf("%d", &opcao2);
+			}
+			if (opcao2 == 1) {
+				printf("\nDigite um nome para o novo arquivo: ");
+				scanf("%s", arquivoCarregado);
+			}
+			else if (arquivoCarregado[0] == '-') {
+				printf("\nNenhum arquivo foi carregado no inicio da operacao!");
+				printf("\nDigite um nome para o novo arquivo: ");
+				scanf("%s", arquivoCarregado);
+			}
 			strcpy(caminho, "Arquivos\\");
 			strcat(caminho, arquivoCarregado);
 			strcat(caminho, ".txt");

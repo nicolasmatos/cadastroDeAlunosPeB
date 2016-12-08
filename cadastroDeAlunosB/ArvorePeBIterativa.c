@@ -343,7 +343,7 @@ void salvar_em_arquivo(Arvore * a, char arquivo[]) {
 	No * raiz = a->raiz;
 
 	if ((fp = fopen(arquivo, "w")) == NULL) {
-		printf("Erro, nao foi possivel abrir o arquivo\n");
+		printf("Erro, nao foi possivel abrir o arquivo: %s\n", arquivo);
 	}
 	salva_aluno(a->raiz, fp);
 	fclose(fp);
